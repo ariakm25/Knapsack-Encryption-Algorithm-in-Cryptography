@@ -49,14 +49,22 @@
                             <button onclick="encrypt()" type="button" class="btn btn-success">Encrypt</button>
                         </div>
                         <div class="mb-3">
-                            <label for="encryption_result" class="form-label">Encryption Result</label>
+                            <label for="encryption_result_binary" class="form-label">Encryption Result Binary</label>
+                            <textarea id="encryption_result_binary" cols="30" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="encryption_result" class="form-label">Encryption Result Text</label>
                             <textarea id="encryption_result" cols="30" rows="2" class="form-control"></textarea>
                         </div>
                         <div class="mb-3">
                             <button onclick="decrypt()" type="button" class="btn btn-danger">Decrypt</button>
                         </div>
                         <div class="mb-3">
-                            <label for="decryption_result" class="form-label">Decryption Result</label>
+                            <label for="decryption_result_binary" class="form-label">Decryption Result Binary</label>
+                            <textarea id="decryption_result_binary" cols="30" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="decryption_result" class="form-label">Decryption Result Text</label>
                             <textarea id="decryption_result" cols="30" rows="2" class="form-control"></textarea>
                         </div>
                     </form>
@@ -88,10 +96,13 @@
         const plainTextArray = plainText.join('');
         const maxLength = privateKey.length;
 
+        document.getElementById('encryption_result_binary').value = plainText.join(', ');
+
         const plainTextArraySplit = [];
         for (let i = 0; i < plainTextArray.length; i += maxLength) {
             plainTextArraySplit.push(plainTextArray.slice(i, i + maxLength));
         }
+
 
         const chipperTexts = plainTextArraySplit.map((item) => {
             let sum = 0;
@@ -135,6 +146,8 @@
         });
 
         const parseBinaryDigits = resultArray.join('').match(/.{1,8}/g)
+
+        document.getElementById('decryption_result_binary').value = parseBinaryDigits.join(', ');
 
         let textResult = '';
 
